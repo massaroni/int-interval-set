@@ -1,8 +1,8 @@
 {
   "name": "int-interval-set",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple interval set for integers.",
-  "main": "int-interval-set.js",
+  "main": "src/int-interval-set.js",
   "scripts": {
     "lint": "eslint . || exit 0",
     "test": "npm lint; mocha ./test/setup.js ./test --recursive -R spec || exit 0"
