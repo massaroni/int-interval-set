@@ -12,10 +12,14 @@
     "range",
     "set"
   ],
-  "author": "Kevin Massaroni",
+  "author": "Kevin Massaroni <kevinmassaroni@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/massaroni/int-interval-set.git"
   },
   "devDependencies": {
     "chai": "^3.5.0",
