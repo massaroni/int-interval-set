@@ -260,4 +260,35 @@ describe('Int Interval Set', function () {
   });
 
 
+  it('should find the cut point with a hint', function () {
+    let set = new IntIntervalSet();
+    set.intervals = [
+      {lower: -9007199254740991, upper: 1549067879},
+      {lower: 1550623081, upper: 1552865879},
+      {lower:1558543081, upper: 9007199254740991}
+    ];
+
+    const lower = 1549756800;
+    const upper = 1550448000;
+
+    const lowerCutpoint = set._findCutPoint(lower);
+    expect(lowerCutpoint.index).to.equal(1);
+    expect(!!lowerCutpoint.connected).to.be.false;
+    expect(!!lowerCutpoint.contained).to.be.false;
+
+    const upperCutpoint = set._findCutPoint(upper);
+    expect(upperCutpoint.index).to.equal(1);
+    expect(!!upperCutpoint.connected).to.be.false;
+    expect(!!upperCutpoint.contained).to.be.false;
+
+    const upperCutpointHint = set._findCutPoint(upper, 1);
+    expect(upperCutpointHint.index).to.equal(1);
+    expect(!!upperCutpointHint.connected).to.be.false;
+    expect(!!upperCutpointHint.contained).to.be.false;
+
+    const intersection = set.intersection(lower, upper);
+    expect(intersection.isEmpty()).to.be.true;
+  });
+
+
 });

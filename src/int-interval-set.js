@@ -64,7 +64,7 @@ class IntIntervalSet {
       return { index: 0 };
     }
 
-    let min = _.isInteger(minHint) ? minHint : 0;
+    let min = _.isInteger(minHint) ? Math.max(0, minHint - 1) : 0;
     let max = _.isInteger(maxHint) ? maxHint : this.intervals.length - 1;
     let mid;
     
