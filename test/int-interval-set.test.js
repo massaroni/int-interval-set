@@ -291,4 +291,22 @@ describe('Int Interval Set', function () {
   });
 
 
+  it('should find the cut point in an internal gap', function () {
+    let set = new IntIntervalSet();
+    set.intervals = [
+      {lower: -9007199254740991, upper: 1541378279},
+      {lower: 1542818281, upper: 1549067879},
+      {lower: 1550623081, upper: 1551832679},
+      {lower: 1558543081, upper: 9007199254740991}
+    ];
+
+    const lower = 1549756800;
+
+    const lowerCutpoint = set._findCutPoint(lower);
+    expect(lowerCutpoint.index).to.equal(2);
+    expect(!!lowerCutpoint.connected).to.be.false;
+    expect(!!lowerCutpoint.contained).to.be.false;
+  });
+
+
 });

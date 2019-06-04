@@ -94,6 +94,8 @@ class IntIntervalSet {
         return { index: mid, connected: 1 };
       } else if (mid === 0) {
         return { index: 0 };
+      } else if (min === max - 1) {
+        return { index: min };
       } else {
         max = mid - 1;
       }
