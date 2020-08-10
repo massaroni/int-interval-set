@@ -1,5 +1,3 @@
-const _ = require('lodash');
-
 /**
  * Simple mutable interval set for integers.
  * All boundaries are always closed (inclusive).
@@ -11,7 +9,7 @@ class IntIntervalSet {
   }
 
   clone() {
-    return new IntIntervalSet(_.cloneDeep(this.intervals));
+    return new IntIntervalSet([...this.intervals]);
   }
 
   /**
@@ -21,7 +19,7 @@ class IntIntervalSet {
    * @param {*} upper 
    */
   union(lower, upper) {
-    if (_.isUndefined(upper)) {
+    if (isUndefined(upper)) {
       upper = lower;
     }
     checkInterval(lower, upper);
@@ -64,8 +62,8 @@ class IntIntervalSet {
       return { index: 0 };
     }
 
-    let min = _.isInteger(minHint) ? Math.max(0, minHint - 1) : 0;
-    let max = _.isInteger(maxHint) ? maxHint : this.intervals.length - 1;
+    let min = Number.isInteger(minHint) ? Math.max(0, minHint - 1) : 0;
+    let max = Number.isInteger(maxHint) ? maxHint : this.intervals.length - 1;
     let mid;
     
     while (min <= max) {
@@ -221,13 +219,21 @@ class IntIntervalSet {
 module.exports = IntIntervalSet;
 
 function checkInterval(lower, upper) {
-  if (!_.isInteger(lower) || !_.isInteger(upper) || lower > upper) {
+  if (!Number.isInteger(lower) || !Number.isInteger(upper) || lower > upper) {
     throw 'Invalid interval: [' + lower + ',' + upper + ']';
   }
 }
 
 function checkPoint(point) {
-  if (!_.isInteger(point)) {
+  if (!Number.isInteger(point)) {
     throw 'Invalid point: ' + point;
   }
+}
+
+function isDefined(x) {
+  return x != null;
+}
+
+function isUndefined(x) {
+  return !isDefined(x);
 }
