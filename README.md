@@ -98,6 +98,23 @@ console.log(set.intervals);
 // [{lower: 2, upper: 10}]
 ```
 
+### Values
+Iterate through all the integer values enclosed by this set.
+```javascript
+const IntIntervalSet = require('int-interval-set');
+let set = new IntIntervalSet();
+set.union(2, 4).union(9);
+
+for (let x of set.values()) {
+  console.log(x);
+}
+
+// 2
+// 3
+// 4
+// 9
+```
+
 ## TODO
 
 ### todo: Remove
