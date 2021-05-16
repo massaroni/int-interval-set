@@ -222,6 +222,18 @@ class IntIntervalSet {
       upper: max.upper
     };
   }
+
+  spanSet() {
+    const span = new IntIntervalSet();
+
+    if (this.isEmpty()) {
+      return span;
+    }
+
+    const { lower, upper } = this.span();
+    span.union(lower, upper);
+    return span;
+  }
 }
 
 module.exports = IntIntervalSet;

@@ -171,6 +171,20 @@ describe('Int Interval Set', function () {
     expect(set.contains(10)).to.equal(false);
   });
 
+  it('should return the span as an IntIntervalSet', function () {
+    let set = new IntIntervalSet();
+    set.intervals = [
+      {lower: 1, upper: 2},
+      {lower: 8, upper: 9}
+    ];
+
+    const spanSet = set.spanSet();
+    const expectedSpan = { lower: 1, upper: 9 };
+    expect(spanSet instanceof IntIntervalSet).to.equal(true);
+    expect(spanSet.intervals).to.deep.equal([expectedSpan]);
+    expect(spanSet.span()).to.deep.equal(expectedSpan);
+  });
+
   it('should generate the complement of this interval set', function () {
     let set = new IntIntervalSet();
     set.intervals = [
