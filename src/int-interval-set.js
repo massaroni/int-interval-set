@@ -105,7 +105,18 @@ class IntIntervalSet {
     return !!this._findCutPoint(point).contained;
   }
 
+  /**
+   * Synonym for points()
+   */
   *values() {
+    for (let interval of this.intervals) {
+      for (let p = interval.lower; p <= interval.upper; p++) {
+        yield p;
+      }
+    }
+  }
+
+  *points() {
     for (let interval of this.intervals) {
       for (let p = interval.lower; p <= interval.upper; p++) {
         yield p;

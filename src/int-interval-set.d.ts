@@ -8,7 +8,8 @@ declare module 'int-interval-set' {
         public clone (): IntIntervalSet
         public union (lower: number, upper?: number): IntIntervalSet
         public contains (point: number): boolean
-        public *values (): Generator<number, void, void>
+        public values (): Generator<number, void, void>
+        public points (): Generator<number, void, void>
         public unionAll (intervals: Interval[])
         public complement (): IntIntervalSet
         public intersection (lower: number, upper: number): IntIntervalSet

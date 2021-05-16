@@ -15,12 +15,24 @@ describe('Int Interval Set', function () {
     expect(set.intervals[1].upper).to.equal(9);
   });
 
-  it('should iterate over all ints in the set, across non overlapping intervals', function () {
+  it('should iterate over all ints in the set, across non overlapping intervals (values)', function () {
     const set = new IntIntervalSet();
     set.union(2, 4).union(8, 9).union(11);
 
     const actual = [];
     for (let x of set.values()) {
+      actual.push(x);
+    }
+
+    expect(actual).to.eql([2, 3, 4, 8, 9, 11]);
+  });
+
+  it('should iterate over all ints in the set, across non overlapping intervals (points)', function () {
+    const set = new IntIntervalSet();
+    set.union(2, 4).union(8, 9).union(11);
+
+    const actual = [];
+    for (let x of set.points()) {
       actual.push(x);
     }
 
