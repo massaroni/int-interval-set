@@ -1,6 +1,6 @@
 {
   "name": "int-interval-set",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A simple interval set (range set) for integers.",
   "main": "src/int-interval-set.js",
   "scripts": {
