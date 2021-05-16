@@ -171,30 +171,20 @@ class IntIntervalSet {
       return bounded;
     }
 
+    const bounds = { lower, upper };
     let lowerPoint = this._findCutPoint(lower);
-    let upperPoint = upper === lower ? lowerPoint : this._findCutPoint(upper, lowerPoint.index);
+    for (let i = lowerPoint.index; i < intervals.length; i++) {
+      const interval = intervals[i];
+      if (upper < interval.lower) {
+        break;
+      }
 
-    if (lowerPoint.index >= intervals.length ||
-        (upperPoint.index <= 0 && !upperPoint.contained) ||
-        (lowerPoint.index === upperPoint.index && !lowerPoint.contained && !upperPoint.contained)) {
-      return bounded;
+      const intersection = intersect(bounds, interval);
+      if (intersection) {
+        bounded.intervals.push(intersection);
+      }
     }
 
-    let tailIndex = lowerPoint.index;
-    let headIndex = upperPoint.contained ? upperPoint.index : upperPoint.index - 1;
-
-    let subintervals = intervals.slice(tailIndex, headIndex + 1);
-    let tail = subintervals[0];
-    if (tail.lower < lower) {
-      subintervals[0] = { lower: lower, upper: tail.upper };
-    }
-
-    let head = subintervals[subintervals.length - 1];
-    if (head.upper > upper) {
-      subintervals[subintervals.length - 1] = { lower: head.lower, upper: upper };
-    }
-
-    bounded.intervals = subintervals;
     return bounded;
   }
 
@@ -237,6 +227,17 @@ class IntIntervalSet {
 }
 
 module.exports = IntIntervalSet;
+
+function intersect({ lower: aLower, upper: aUpper }, {lower: bLower, upper: bUpper}) {
+  if (aUpper < bLower || bUpper < aLower) {
+    return;
+  }
+
+  return {
+    lower: Math.max(aLower, bLower),
+    upper: Math.min(aUpper, bUpper)
+  };
+}
 
 function checkInterval(lower, upper) {
   if (!Number.isInteger(lower) || !Number.isInteger(upper) || lower > upper) {

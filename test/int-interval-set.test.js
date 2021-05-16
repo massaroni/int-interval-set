@@ -61,6 +61,62 @@ describe('Int Interval Set', function () {
     expect(set.intervals[0].upper).to.equal(5);
   });
 
+  it('should not intersect adjacent interval (higher)', function () {
+    let set = new IntIntervalSet([{ lower: 15, upper: 25 }]);
+    const intersection = set.intersection(26, 30)
+    expect(intersection.isEmpty()).to.equal(true)
+  });
+
+  it('should not intersect adjacent interval (lower)', function () {
+    let set = new IntIntervalSet([{ lower: 15, upper: 25 }]);
+    const intersection = set.intersection(10, 14)
+    expect(intersection.isEmpty()).to.equal(true)
+  });
+
+  it('should intersect lower and higher intervals', function () {
+    let set = new IntIntervalSet([{ lower: 15, upper: 25 }, { lower: 30, upper: 40 }]);
+    const intersection = set.intersection(20, 33);
+    expect(intersection.intervals).to.deep.equal([
+      { lower: 20, upper: 25 },
+      { lower: 30, upper: 33 }
+    ]);
+  });
+
+  it('should intersect middle and higher intervals, adjacent to a low interval', function () {
+    let set = new IntIntervalSet([{ lower: 15, upper: 25 }, { lower: 30, upper: 40 }, { lower: 45, upper: 50 }]);
+    const intersection = set.intersection(26, 47);
+    expect(intersection.intervals).to.deep.equal([
+      { lower: 30, upper: 40 },
+      { lower: 45, upper: 47 }
+    ]);
+  });
+
+  it('should intersect middle and lower intervals, adjacent to a high interval', function () {
+    let set = new IntIntervalSet([{ lower: 15, upper: 25 }, { lower: 30, upper: 40 }, { lower: 45, upper: 50 }]);
+    const intersection = set.intersection(20, 44);
+    expect(intersection.intervals).to.deep.equal([
+      { lower: 20, upper: 25 },
+      { lower: 30, upper: 40 }
+    ]);
+  });
+
+  it('should intersect a subset', function () {
+    let set = new IntIntervalSet([{ lower: 15, upper: 25 }, { lower: 30, upper: 40 }]);
+    const intersection = set.intersection(0, 100);
+    expect(intersection.intervals).to.deep.equal([
+      { lower: 15, upper: 25 },
+      { lower: 30, upper: 40 }
+    ]);
+  });
+
+  it('should intersect a superset', function () {
+    let set = new IntIntervalSet([{ lower: 1, upper: 100 }]);
+    const intersection = set.intersection(40, 50);
+    expect(intersection.intervals).to.deep.equal([
+      { lower: 40, upper: 50 }
+    ]);
+  });
+
   it('should find cut points', function () {
     let set = new IntIntervalSet();
     set.intervals = [
